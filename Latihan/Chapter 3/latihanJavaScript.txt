@@ -1,0 +1,67 @@
+// Dasar JS
+
+// Buatlah sebuah object constant bernama steamAccount
+// Attribute steamAccount: email, password, isVerified, wallet, games (array of objects), friends (array of object steamAccount)
+// Attribute setiap object games: name, rank (string)
+// Tampilkan (console log) rank game pertama dari teman pertama
+
+steamAccount = {
+  email : 'email@email.com',
+  password : 'pass',
+  isVerified : true,
+  wallet : 5000000,
+  games : [
+    'Pokémon Legends: Arceus',
+    'Uncharted: Legacy of Thieves',
+    'Strange Horticulture'
+  ],
+  friends : [
+    {
+      email : 'email@email.com',
+      password : 'pass',
+      isVerified : true,
+      wallet : 5000000,
+      games : [
+        'Pokémon Legends: Arceus',
+        'Uncharted: Legacy of Thieves',
+        'Strange Horticulture'
+      ]
+    },
+    {
+      email : 'email@email.com',
+      password : 'pass',
+      isVerified : true,
+      wallet : 5000000,
+      games : [
+        'Pokémon Legends: Arceus',
+        'Uncharted: Legacy of Thieves',
+        'Strange Horticulture'
+      ]
+    },
+    {
+      email : 'email@email.com',
+      password : 'pass',
+      isVerified : true,
+      wallet : 5000000,
+      games : [
+        'Pokémon Legends: Arceus',
+        'Uncharted: Legacy of Thieves',
+        'Strange Horticulture'
+      ]
+    },
+  ]
+
+}
+
+console.log(steamAccount['friends'][0]['games'][0])
+
+// Operator JS
+
+// Buatlah sebuah variabel integer x dan y, lakukan penjumlahan terhadap kedua variabel tersebut lalu lakukan pengecekan,
+// apabila hasilnya lebih dari 0 maka lakukan pengecekan lagi, jika hasilnya habis dibagi 2 maka tuliskan pesan
+// “Angka lebih dari 0 dan habis dibagi 2”. Jika tidak tuliskan “Angka tidak lebih dari 0”.
+
+// Selesaikan menggunakan ternary operator!
+
+let x = 1, y = 2
+console.log((x + y) > 0 ?( ((x + y) % 2) === 0 ? 'Angka lebih dari 0 dan habis dibagi 2' : 'Angka lebih dari 0 dan tidak habis dibagi 2' ): 'Angka tidak lebih dari 0' )
