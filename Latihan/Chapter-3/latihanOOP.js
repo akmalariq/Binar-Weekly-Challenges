@@ -1,3 +1,4 @@
+// EXAMPLE 
 // class Human {
 //     // Add static property
 //     static isLivingOnEarth = true
@@ -71,9 +72,15 @@ class Car extends Vehicle {
         }
     }
 
+    explode() {
+        super.explode()
+    }
+
     buy(money) {
-        if (money >= this.price) {
+        if (money > this.price) {
             console.log(`Berhasil membeli ${this.name} dengan kembalian ${money-this.price}`)
+        } else if(money == this.price){
+            console.log(`Berhasil membeli ${this.name} dengan uang pas`)
         } else {
             console.log(`Gagal membeli ${this.name} harga mobil adalah ${this.price}`)
         }
@@ -82,16 +89,16 @@ class Car extends Vehicle {
 
 class Product {
     constructor(name, price, stock) {
-        this.id = generateID()
+        this.id = this.generateID()
         this.name = name
         this.price = price
         this.stock =stock
-        this.isStockReady = checkIsStockReady()
+        this.isStockReady = this.checkIsStockReady()
     }
 
     generateID(){
         return Math.random * 100000
-    }
+    }s
 
     checkIsStockReady() {
         return (stock > 0) ? true : false
