@@ -64,7 +64,7 @@ Buatlah sebuah button, button ini yang akan menjadi trigger untuk melakukan peru
             <p id="pCalc"></p>
         </div>
         <div class="row row-cols-3  d-flex justify-content-center">
-            <div class="col-2 bg-black">
+            <div class="col-2">
                 <div class="col  m-1">
                     <div class="col m-1">
                         <div class="btn btn-primary" id="num_1">
@@ -104,7 +104,7 @@ Buatlah sebuah button, button ini yang akan menjadi trigger untuk melakukan peru
                     </div>
                 </div>
             </div>
-            <div class="col-1 m-0 bg-danger">
+            <div class="col-1 m-0">
                 <div class="row">
                     <div class="btn btn-primary my-1" id="sumCalc">
                         +
@@ -123,7 +123,7 @@ Buatlah sebuah button, button ini yang akan menjadi trigger untuk melakukan peru
                     </div>
                 </div>
             </div>
-            <div class="col-1 m-0 bg-secondary">
+            <div class="col-1 m-0">
                 <div class="col">
                     <div class="btn btn-primary" id="resetCalc">
                         Reset
@@ -218,28 +218,56 @@ Buatlah sebuah button, button ini yang akan menjadi trigger untuk melakukan peru
         })
         sumCalc.addEventListener("click", () => {
             const pCalc = document.getElementById("pCalc")
-            pCalc.innerHTML += "+ ";
+            calculation = pCalc.innerHTML.replace(/\s+/g, '')
+            test = calculation[calculation.length - 1]
+            if ((calculation != "") && (test != "+") && (test != "-") && (test != "/") && (test != "*")) {
+                pCalc.innerHTML += "+ ";
+            }
         })
         subtractCalc.addEventListener("click", () => {
             const pCalc = document.getElementById("pCalc")
-            pCalc.innerHTML += "- ";
+            calculation = pCalc.innerHTML.replace(/\s+/g, '')
+            test = calculation[calculation.length - 1]
+            if ((calculation != "") && (test != "+") && (test != "-") && (test != "/") && (test != "*")) {
+                pCalc.innerHTML += "- ";
+            }
         })
         divCalc.addEventListener("click", () => {
             const pCalc = document.getElementById("pCalc")
-            pCalc.innerHTML += "/ ";
+            calculation = pCalc.innerHTML.replace(/\s+/g, '')
+            test = calculation[calculation.length - 1]
+            if ((calculation != "") && (test != "+") && (test != "-") && (test != "/") && (test != "*")) {
+                pCalc.innerHTML += "/ ";
+            }
         })
         multiCalc.addEventListener("click", () => {
             const pCalc = document.getElementById("pCalc")
-            pCalc.innerHTML += "* ";
+            calculation = pCalc.innerHTML.replace(/\s+/g, '')
+            test = calculation[calculation.length - 1]
+            if ((calculation != "") && (test != "+") && (test != "-") && (test != "/") && (test != "*")) {
+                pCalc.innerHTML += "* ";
+            }
         })
         outputCalc.addEventListener("click", () => {
             const pCalc = document.getElementById("pCalc")
             calculation = pCalc.innerHTML.replace(/\s+/g, '')
-            listOfNum = calculation.split("+")
-            for (let i = 0; i < listOfNum.length; i++) {
-                listOfNum[i] = parseInt(listOfNum[i])
+            if (calculation != "") {
+                listOfNum = calculation.split(/[\+\-\*\/]/)
+                listOfOperators = calculation.split(/[0-9]*/)
+                sumCalc = parseInt(listOfNum[0])
+                for (let i = 1; i < listOfNum.length; i++) {
+                    if (listOfOperators[i] == "+") {
+                        sumCalc += parseInt(listOfNum[i])
+                    } else if (listOfOperators[i] == "-") {
+                        sumCalc -= parseInt(listOfNum[i])
+                    } else if (listOfOperators[i] == "/") {
+                        sumCalc /= parseInt(listOfNum[i])
+                    } else if (listOfOperators[i] == "*") {
+                        sumCalc *= parseInt(listOfNum[i])
+                    }
+                }
+                pCalc.innerHTML = sumCalc
             }
-            pCalc.innerHTML = listOfNum.reduce((a, b) => a + b, 0);
         })
         resetCalc.addEventListener("click", () => {
             const pCalc = document.getElementById("pCalc")
