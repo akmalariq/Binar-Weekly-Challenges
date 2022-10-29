@@ -44,31 +44,40 @@
 class Vehicle{
     static isEngineActivated = false
 
-    explode() {
+    static explode() {
         console.log("Berhasil meledakkan kendaraan")
     }
 
     start() {
-        if (isEngineActivated) {
+        if (this.isEngineActivated) {
+
             console.log("Mesin berhasil menyala")
         } else {
-            explode()
+            this.explode()
         }
     }
 }
 
+// console.log("Vehicle")
+// console.log("Establishing new vehicle")
+// let hehe = new Vehicle
+// console.log("Starting engine")
+// hehe.isEngineActivated = true
+// hehe.start()
+
 class Car extends Vehicle {
     constructor(name, brand, price) {
+        super()
         this.name = name
         this.brand = brand
         this.price = price
     }
 
     start(isFuelNotEmpty) {
-        if (isEngineActivated && isFuelNotEmpty) {
-            "Mesin berhasil menyala"
+        if (Vehicle.isEngineActivated && isFuelNotEmpty) {
+            return "Mesin berhasil menyala"
         } else {
-            "Mesin gagal menyala"
+            return "Mesin gagal menyala"
         }
     }
 
@@ -87,28 +96,50 @@ class Car extends Vehicle {
     }
 }
 
+// console.log("Car")
+// let Benny = new Car("Benny", "Mercedes Benz", 6e8)
+// console.log("Creating Car named Benny")
+// console.log("Starting Benny with fuel = true")
+// console.log(Benny.start(true))
+// console.log("Starting Benny with fuel = false")
+// console.log(Benny.start(false))
+// console.log("Buying Benny uang pas")
+// Benny.buy(6e8)
+// console.log("Buying Benny uang lebih")
+// Benny.buy(75e7)
+// console.log("Buying Benny uang kurang")
+// Benny.buy(5e8)
+
 class Product {
     constructor(name, price, stock) {
         this.id = this.generateID()
         this.name = name
         this.price = price
-        this.stock =stock
+        this.stock = stock
         this.isStockReady = this.checkIsStockReady()
     }
 
     generateID(){
-        return Math.random * 100000
-    }s
+        return Math.floor(Math.random() * 100000)
+    }
 
     checkIsStockReady() {
-        return (stock > 0) ? true : false
+        return (this.stock > 0) ? true : false
     }
 
     getProduct() {
-        console.log(`id\t=\t${this.id}`)
-        console.log(`name\t=\t${this.name}`)
-        console.log(`price\t=\t${this.price}`)
-        console.log(`stock\t=\t${this.stock}`)
+        console.log(`id\t\t=\t${this.id}`)
+        console.log(`name\t\t=\t${this.name}`)
+        console.log(`price\t\t=\t${this.price}`)
+        console.log(`stock\t\t=\t${this.stock}`)
         console.log(`Is stock ready\t=\t${this.isStockReady}`)
     }
 }
+
+// console.log("Product")
+// console.log("Creating new Product")
+// let tws = new Product("Moondrop", 2e6, 10)
+// console.log("Get Product")
+// tws.getProduct()
+// console.log("Check Stock")
+// console.log(tws.checkIsStockReady())
