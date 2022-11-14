@@ -16,11 +16,11 @@ const getHTML = (fileName) => {
 const onRequest = (req, res) => {
   switch (req.url) {
     case "/":
-      const htmlIndex = getHTML('index.example.html');
+    //   const htmlIndex = getHTML('index.html');
 
       res.setHeader('Content-Type', 'text/html');
       res.writeHead(200);
-      res.end(htmlIndex);
+      res.end(getHTML('akusalah.html'));
 
       return
     case "/about":
