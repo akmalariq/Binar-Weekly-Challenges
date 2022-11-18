@@ -83,16 +83,7 @@ app.delete("/api/v1/car/:id", (req, res) => {
       throw "Car not found!"
     }
     Car.update({
-      // name: car.name,
-      // type: car.type,
-      // dailyPrice: car.dailyPrice,
-      // size: car.size,
-      // imgURL: car.imgURL,
-      // createdAt: car.createdAt,
-      // updatedAt: car.updatedAt,
       deletedAt: new Date(),
-      // createdBy: car.createdBy,
-      // updatedBy: car.updatedBy,
       deletedBy: req.body.deletedBy,
       ...car
     }, {
