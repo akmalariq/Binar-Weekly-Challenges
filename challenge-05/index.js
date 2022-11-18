@@ -100,3 +100,7 @@ app.delete("/api/v1/car/:id", (req, res) => {
       res.status(404).send(err)
   })
 })
+
+app.listen(port, () => {
+  console.log(`Server running at http://127.0.0.1:${port}`)
+})
