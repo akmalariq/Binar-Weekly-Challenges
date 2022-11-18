@@ -1,128 +1,111 @@
 const express = require('express')
 const app = express()
 const port = 2000
+const { Car } = require('./models')
 
+app.use(express.urlencoded({ extended:false }))
 app.use(express.json())
 
-class Book {
-  static records = [];
-  
-  constructor(params) {
-    this.id = this._generateId()
-    this.title = params.title;
-    this.coverImage = params.coverImage;
-    this.synopsis = params.synopsis;
-    this.publisher = params.publisher;
-    this.author = params.author;
-    this.price = params.price;
-  }
-
-  _generateId() {
-    const lastRecordId = this.constructor.records[this.constructor.records - 1]?.id || 0
-    return lastRecordId + 1;
-  }
-  
-  update(params) {
-    const idx = this.constructor.records.findIndex((i) => i.id === this.id);
-
-    params.title && (this.title = params.title);
-    params.coverImage && (this.coverImage = params.coverImage);
-    params.synopsis && (this.synopsis = params.synopsis);
-    params.publisher && (this.publisher = params.publisher);
-    params.author && (this.author = params.author);
-    params.price && (this.price = params.price);
-    
-    this.constructor.records[idx] = this;
-    
-    return this;
-  }
-  
-  delete() {
-    this.constructor.records = this.constructor.records.filter((i) => i.id !== this.id);
-  }
-
-  static create(params) {
-    const book = new this(params);
-
-    this.records.push(book);
-
-    return book;
-  }
-
-  static find(id) {
-    const book = this.records.find((i) => i.id === Number(id));
-    if (!book) return null;
-
-    return book;
-  }
-
-  static list() {
-    return this.records
-  }
-}
-
-// GET /books (list books)
-app.get("/books", (req, res) => {
-    const books = Book.list()
-    res.status(200).json(books)
+// GET all cars
+app.get("/api/v1/cars", (req, res) => {
+  Car.findAll({
+    where: { deletedAt:null }
+  }).then(cars => {
+    res.status(200).json(cars)
+  })
 })
 
-// GET /books/{id} (get book)
-app.get("/books/:id", (req, res) => {
-    const book = Book.find(req.params.id)
-    if (!book) res.status(404).json({
-        error: "Book not found!"
+// GET car by ID
+app.get("/api/v1/car/:id", (req, res) => {
+  Car.findByPk(req.params.id).then(car => {
+    res.status(200).json(car)
     })
-
-    res.status(200).json(book)
 })
 
-// POST /books (create book)
-app.post("/books", (req, res) => {
-    const book = Book.create(req.body)
-    res.status(201).json(book)
+// POST a car
+app.post("/api/v1/car", (req, res) => {
+  Car.create({  
+    name: req.body.name,
+    type: req.body.type,
+    dailyPrice: req.body.dailyPrice,
+    size: req.body.size,
+    imgURL: req.body.imgURL,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    deletedAt: null,
+    createdBy: req.body.createdBy,
+    updatedBy: null,
+    deletedBy: null
+  }).then(car => {
+    res.status(201).json(car)
+  }).catch(err => {
+    res.status(422).json("Can't create car")
+  })
 })
 
-// PUT /books{id} (update book)
-app.put("/books/:id", (req, res) => {
-    const book = Book.find(req.params.id)
-    if (!book) return res.status(404).json({
-        error: "Book not found!"
+// PUT a car
+app.put("/api/v1/car/:id", (req, res) => {
+  Car.findByPk(req.params.id).then(car => {
+    if (car === null) {
+      throw "Car not found!"
+    }
+    Car.update({
+      name: req.body.name,
+      type: req.body.type,
+      dailyPrice: req.body.dailyPrice,
+      size: req.body.size,
+      imgURL: req.body.imgURL,
+      createdAt: car.createdAt,
+      updatedAt: new Date(),
+      deletedAt: null,
+      createdBy: car.createdBy,
+      updatedBy: req.body.updatedBy,
+      deletedBy: null
+    }, {
+      where: { id:req.params.id }
     })
-
-    book.update(req.body)
-
-    res.status(200).json(book)
+      .then(car => {
+        res.status(201).json(car)
+      })
+      .catch(err => {
+        res.status(422).json("Can't update car")
+      })
+  })
+    .catch(err => {
+      res.status(404).send(err)
+  })
 })
 
-// DELETE /books{id} (delete book)
-app.delete("/books/:id", (req, res) => {
-    const book = Book.find(req.params.id)
-    if (!book) return res.status(404).json({
-        error: "Book not found!"
+// DELETE a car
+app.delete("/api/v1/car/:id", (req, res) => {
+  Car.findByPk(req.params.id).then(car => {
+    if (car === null) {
+      throw "Car not found!"
+    }
+    Car.update({
+      // name: car.name,
+      // type: car.type,
+      // dailyPrice: car.dailyPrice,
+      // size: car.size,
+      // imgURL: car.imgURL,
+      // createdAt: car.createdAt,
+      // updatedAt: car.updatedAt,
+      deletedAt: new Date(),
+      // createdBy: car.createdBy,
+      // updatedBy: car.updatedBy,
+      deletedBy: req.body.deletedBy,
+      ...car
+    }, {
+      where: { id:req.params.id }
     })
-
-    book.delete()
-
-    res.status(204).json(book)
-})
-
-
-
-app.get('/', (req, res) => {
-    // res.send('Hello World!')
-    res.sendFile('./index.html', {root: __dirname})
-})
-
-app.get('/about', (req, res) => {
-    res.send('About Page')
-})
-
-app.use('/', (req, res) => {
-    res.status(404)
-    res.send('<h1>404</h1>')
-})
-
-app.listen(port, () => {
-    console.log(`app listening at http://localhost:${port}`)
+      .then(car => {
+        res.status(201).json(car)
+      })
+      .catch(err => {
+        res.status(422).json("Can't delete car")
+      })
+  })
+    .catch(err => {
+      res.status(404).send(err)
+  })
 })
