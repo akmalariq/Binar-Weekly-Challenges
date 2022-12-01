@@ -1,0 +1,124 @@
+const usersRepository = require('../repositories/usersRepository')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const { OAuth2Client } = require('google-auth-library')
+
+const { JWT } = require('../lib/const')
+
+const SALT_ROUND = 10
+
+class AuthService {
+    static async register({ name, email, password, role, imgURL }) {
+        try {
+            // Payload Validation
+            if (!name) {
+                return {
+                    status: false,
+                    status_code: 400,
+                    message: 'Name is required, please input name.',
+                    data: {
+                        user: null
+                    }
+                }
+            }
+            
+            if (!email) {
+                return {
+                    status: false,
+                    status_code: 400,
+                    message: 'Email is required, please input email.',
+                    data: {
+                        user: null
+                    }
+                }
+            }
+
+            if (!role) {
+                return {
+                    status: false,
+                    status_code: 400,
+                    message: 'Role is required, please input role.',
+                    data: {
+                        user: null
+                    }
+                }
+            }
+
+            if (!password) {
+                return {
+                    status: false,
+                    status_code: 400,
+                    message: 'Password is required, please input password.',
+                    data: {
+                        user: null
+                    }
+                }
+            } else if (password.length < 8) {
+                return {
+                    status: false,
+                    status_code: 400,
+                    message: 'Password has to have more than 8 characters, please input another password.',
+                    data: {
+                        user: null
+                    }
+                }
+            }
+
+            if (!imgURL) {
+                return {
+                    status: false,
+                    status_code: 400,
+                    message: 'ImgURL is required, please input imgURL.',
+                    data: {
+                        user: null
+                    }
+                }
+            }
+
+            const getUserByEmail = await usersRepository.getByEmail({ email })
+
+            if (getUserByEmail) {
+                return {
+                    status: false,
+                    status_code: 400,
+                    message: 'Email is already exist.',
+                    data: {
+                        user: null
+                    }
+                }
+            }
+
+            const hashedPassword = await bcrypt.hash(password, SALT_ROUND)
+            const createdUser = await usersRepository.create({
+                name,
+                email,
+                password: hashedPassword,
+                role,
+                imgURL
+            })
+
+            return {
+                status: true,
+                status_code: 201,
+                message: "Registration is success",
+                data: {
+                    registered_user: createdUser
+                }
+            }
+
+        } catch (err) {
+            return {
+                status: false,
+                status_code: 500,
+                message: err.message,
+                data: {
+                    registered_user: null
+                }
+            }
+        }
+    }
+
+    static async login({ email, password }) {
+        
+    }
+}

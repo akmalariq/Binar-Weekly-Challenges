@@ -12,6 +12,73 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
+    await queryInterface.bulkInsert('Cars', [
+      {
+        name: 'kijang',
+        type: 'sedan',
+        dailyPrice: 123e5,
+        size: 'medium',
+        imgURL: 'resume.lockonmaram.com',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        deletedAt: null,
+        createdBy: 'maram',
+        updatedBy: null,
+        deletedBy: null
+      },
+      {
+        name: 'estillo',
+        type: 'sedan',
+        dailyPrice: 123e5,
+        size: 'medium',
+        imgURL: 'resume.lockonmaram.com',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        deletedAt: null,
+        createdBy: 'maram',
+        updatedBy: null,
+        deletedBy: null
+      },
+      {
+        name: 'civic',
+        type: 'sedan',
+        dailyPrice: 123e5,
+        size: 'medium',
+        imgURL: 'resume.lockonmaram.com',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        deletedAt: null,
+        createdBy: 'maram',
+        updatedBy: null,
+        deletedBy: null
+      },
+      {
+        name: 'vw kodok',
+        type: 'sedan',
+        dailyPrice: 123e5,
+        size: 'medium',
+        imgURL: 'resume.lockonmaram.com',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        deletedAt: null,
+        createdBy: 'maram',
+        updatedBy: null,
+        deletedBy: null
+      },
+      {
+        name: 'harley',
+        type: 'sedan',
+        dailyPrice: 123e5,
+        size: 'medium',
+        imgURL: 'resume.lockonmaram.com',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        deletedAt: null,
+        createdBy: 'maram',
+        updatedBy: null,
+        deletedBy: null
+      },
+    ], {});
   },
 
   async down (queryInterface, Sequelize) {
@@ -21,5 +88,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+    await queryInterface.bulkDelete('Cars', null, {});
   }
 };
