@@ -1,9 +1,10 @@
 exports.JWT = {
-  SECRET: process.env.JWT_SECRET,
-  EXPIRED: process.env.JWT_EXPIRED,
+  SECRET: 'hello world',
+  EXPIRED: '24h',
 };
 
 exports.ROLES = {
+  SUPERADMIN: "superadmin",
   ADMIN: "admin",
   USER: "user",
 };
