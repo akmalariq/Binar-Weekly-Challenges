@@ -1,14 +1,14 @@
-const authService = require('../services/')
+const authService = require('../services/authService')
 
 const register = async (req, res) => {
-    const { name, email, password, role } = req.body
+    const { name, email, password, role, imgURL } = req.body
 
     const { status, status_code, message, data } = await authService.register({
         name,
         email,
         password,
         role,
-        imgURL: req.uploaded_picture
+        imgURL
     })
 
     res.status(status_code).send({

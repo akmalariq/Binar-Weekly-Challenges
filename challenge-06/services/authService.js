@@ -8,7 +8,7 @@ const { authenticate } = require('../middlewares/auth')
 
 const SALT_ROUND = 10
 
-class AuthService {
+class authService {
     static async register({ name, email, password, role, imgURL }) {
         try {
             // Payload Validation
@@ -223,4 +223,4 @@ class AuthService {
     // }
 }
 
-module.exports = AuthService
+module.exports = authService

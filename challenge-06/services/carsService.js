@@ -117,6 +117,17 @@ class CarsService{
         try {
             const getCarByID = await carsRepository.getByID(id)
 
+            if (!getCarByID) {
+                return {
+                    status: false,
+                    status_code: 404,
+                    message: "Car ID is not found",
+                    data: {
+                        car: null
+                    }
+                }
+            }
+
             return {
                 status: true,
                 status_code: 200,
@@ -140,17 +151,10 @@ class CarsService{
 
     static async delete(id) {
         try {
-            const { status, data } = await this.getByID(id)
+            const getCarByID = await this.getByID(id)
 
-            if (!status) {
-                return {
-                    status: false,
-                    status_code: 404,
-                    message: "Car ID is not found",
-                    data: {
-                        car: null
-                    }
-                }
+            if (!getCarByID.status) {
+                return getCarByID
             }
 
             const deletedCar = await carsRepository.delete(id)
@@ -161,7 +165,7 @@ class CarsService{
                 message: "Car is removed successfully",
                 data: {
                     rows_deleted: deletedCar,
-                    deleted_car: data['get_car']
+                    deleted_car: getCarByID.data['get_car']
                 }
             }
 
@@ -179,24 +183,17 @@ class CarsService{
 
     static async update({ id, name, type, dailyPrice, size, imgURL }) {
         try {
-            const { status, data } = await this.getByID(id)
+            const getCarByID = await this.getByID(id)
 
-            if (!status) {
-                return {
-                    status: false,
-                    status_code: 404,
-                    message: "Car ID is not found",
-                    data: {
-                        car: null
-                    }
-                }
+            if (!getCarByID.status) {
+                return getCarByID
             }
 
             if (!name && !type && !dailyPrice && !size && !imgURL) {
                 return {
                     status: false,
                     status_code: 404,
-                    message: "Please add an instance to update",
+                    message: "Please add an argument to update",
                     data: {
                         car: null
                     }
@@ -204,23 +201,23 @@ class CarsService{
             }
 
             if (!name) {
-                name = data['get_car']['name']
+                name = getCarByID.data['get_car']['name']
             }
 
             if (!type) {
-                type = data['get_car']['type']
+                type = getCarByID.data['get_car']['type']
             }
 
             if (!dailyPrice) {
-                dailyPrice = data['get_car']['dailyPrice']
+                dailyPrice = getCarByID.data['get_car']['dailyPrice']
             }
 
             if (!size) {
-                size = data['get_car']['size']
+                size = getCarByID.data['get_car']['size']
             }
 
             if (!imgURL) {
-                imgURL = data['get_car']['imgURL']
+                imgURL = getCarByID.data['get_car']['imgURL']
             }
 
             const updatedCar = await carsRepository.update({ id, name, type, dailyPrice, size, imgURL })

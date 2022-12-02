@@ -1,5 +1,6 @@
 'use strict';
-
+const bcrypt = require('bcrypt')
+const SALT_ROUND = 10
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -17,7 +18,7 @@ module.exports = {
       {
         name: 'akmal',
         email: 'akmal@email.com',
-        password: 'akmal',
+        password: await bcrypt.hash('akmal1234', SALT_ROUND),
         role: 'superadmin',
         imgURL: 'https://randomuser.me/api/portraits/men/1.jpg',
         createdAt: new Date(),
@@ -30,7 +31,7 @@ module.exports = {
       {
         name: 'ariq',
         email: 'ariq@email.com',
-        password: 'ariq',
+        password: await bcrypt.hash('ariq12345', SALT_ROUND),
         role: 'admin',
         imgURL: 'https://randomuser.me/api/portraits/men/1.jpg',
         createdAt: new Date(),
@@ -43,7 +44,7 @@ module.exports = {
       {
         name: 'abel',
         email: 'abel@email.com',
-        password: 'abel',
+        password: await bcrypt.hash('abel12345', SALT_ROUND),
         role: 'member',
         imgURL: 'https://randomuser.me/api/portraits/men/1.jpg',
         createdAt: new Date(),

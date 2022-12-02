@@ -7,7 +7,7 @@ const authenticate = async (req, res, next) => {
 
     let token = ""
 
-    if (authHeader && authHeader.startswith('Bearer')) {
+    if (authHeader && authHeader.split(" ")[0] === "Bearer") {
         token = authHeader.split(" ")[1]
     } else {
         return res.status(401).send({
@@ -22,7 +22,7 @@ const authenticate = async (req, res, next) => {
 
         const getUser = await usersRepository.getByEmail(email)
 
-        req, user = getUser
+        req.user = getUser
         
         next()
 

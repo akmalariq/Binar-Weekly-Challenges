@@ -24,7 +24,7 @@ const carsController = require('./controllers/carsController')
 const authController = require('./controllers/authController')
 
 // Import Middleware
-// const middleware = require('./middlewares/auth')
+const middleware = require('./middlewares/auth')
 
 // Define Routes
 
@@ -32,10 +32,12 @@ const authController = require('./controllers/authController')
 // app.get('/testing-ci-cd/:id', userController.getPostsByID)
 
 // Auth
-app.post('/auth/register', authController.regis)
+app.post('/auth/register', authController.register)
+app.post('/auth/login', authController.login)
+app.post('/auth/me', middleware.authenticate, authController.currentUser)
 
 // Cars
-app.post("/api/v1/car", carsController.create)
+app.post("/api/v1/car", middleware.authenticate, middleware.isAdmin, carsController.create)
 app.get("/api/v1/cars", carsController.getAll)
 app.get("/api/v1/car/:id", carsController.getByID)
 app.delete("/api/v1/car/:id", carsController.deleteCar)
