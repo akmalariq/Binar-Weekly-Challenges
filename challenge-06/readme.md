@@ -6,18 +6,18 @@ Open API: http://localhost:2000/api-docs
 
 Super Admin:
 
-  username: akmal
+  email: akmal@email.com
 
   password: akmal1234
 
 Admin:
   
-  username: ariq
+  email: ariq@email.com
   
   password: ariq12345
 
 Member:
   
-  username: abel
+  email: abel@email.com
   
   password: abel12345
