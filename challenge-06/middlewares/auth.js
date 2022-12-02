@@ -39,7 +39,7 @@ const authenticate = async (req, res, next) => {
 const isAdmin = async (req, res, next) => {
     const user = req.user
 
-    if (user.role === ROLES.ADMIN) return next()
+    if ((user.role === ROLES.ADMIN) || (user.role === ROLES.SUPERADMIN)) return next()
 
     return res.status(401).send({
         status: false,
@@ -48,4 +48,16 @@ const isAdmin = async (req, res, next) => {
     })
 }
 
-module.exports = { authenticate, isAdmin }
+const isSuperAdmin = async (req, res, next) => {
+    const user = req.user
+
+    if (user.role === ROLES.SUPERADMIN) return next()
+
+    return res.status(401).send({
+        status: false,
+        message: "You need a Super Admin credentials to pass here",
+        data: null
+    })
+}
+
+module.exports = { authenticate, isAdmin, isSuperAdmin }

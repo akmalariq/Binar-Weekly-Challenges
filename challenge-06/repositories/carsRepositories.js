@@ -3,7 +3,7 @@ const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 
 class CarsRepository {
-    static async create({ name, type, dailyPrice, size, imgURL }) {
+    static async create({ name, type, dailyPrice, size, imgURL, username }) {
         const createdCar = Car.create({
             name,
             type,
@@ -13,8 +13,8 @@ class CarsRepository {
             createdAt: new Date(),
             updatedAt: new Date(),
             deletedAt: null,
-            createdBy: "user",
-            updatedBy: "user",
+            createdBy: username,
+            updatedBy: username,
             deletedBy: null
         })
 
@@ -35,11 +35,11 @@ class CarsRepository {
         return getCarByID
     }
 
-    static async delete(id) {
+    static async delete({ id, username }) {
         const deletedCar = await Car.update(
             {
                 deletedAt: new Date(),
-                deletedBy: "user"
+                deletedBy: username
             },
             {
                 where: { id:id }
@@ -48,7 +48,7 @@ class CarsRepository {
         return deletedCar
     }
 
-    static async update({ id, name, type, dailyPrice, size, imgURL }) {
+    static async update({ id, name, type, dailyPrice, size, imgURL, username }) {
         const deletedCar = await Car.update(
             {
                 name,
@@ -57,7 +57,7 @@ class CarsRepository {
                 size,
                 imgURL,
                 updatedAt: new Date(),
-                updatedBy: "user",
+                updatedBy: username,
             },
             {
                 where: { id:id }

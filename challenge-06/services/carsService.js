@@ -1,7 +1,7 @@
 const carsRepository = require('../repositories/carsRepositories')
 
 class CarsService{
-    static async create({ name, type, dailyPrice, size, imgURL }) {
+    static async create({ name, type, dailyPrice, size, imgURL, username }) {
         console.log('service terpanggil')
         try {
             if (!name) {
@@ -64,7 +64,8 @@ class CarsService{
                 type,
                 dailyPrice,
                 size,
-                imgURL
+                imgURL,
+                username
             })
 
             return {
@@ -126,6 +127,15 @@ class CarsService{
                         car: null
                     }
                 }
+            } else if (getCarByID.deletedAt !== null) {
+                return {
+                    status: false,
+                    status_code: 404,
+                    message: "Car not found, maybe deleted...",
+                    data: {
+                        car: null
+                    }
+                }
             }
 
             return {
@@ -149,23 +159,24 @@ class CarsService{
         }
     }
 
-    static async delete(id) {
+    static async delete({ id, username }) {
         try {
             const getCarByID = await this.getByID(id)
-
+            
             if (!getCarByID.status) {
                 return getCarByID
             }
-
-            const deletedCar = await carsRepository.delete(id)
-
+            
+            const rows_deleted = await carsRepository.delete({ id, username })
+            const deleted_car = await this.getByID(id)
+            
             return {
                 status: true,
                 status_code: 201,
                 message: "Car is removed successfully",
                 data: {
-                    rows_deleted: deletedCar,
-                    deleted_car: getCarByID.data['get_car']
+                    rows_deleted: rows_deleted,
+                    deleted_car: rows_deleted.data['get_car']
                 }
             }
 
@@ -181,7 +192,7 @@ class CarsService{
         }
     }
 
-    static async update({ id, name, type, dailyPrice, size, imgURL }) {
+    static async update({ id, name, type, dailyPrice, size, imgURL, username }) {
         try {
             const getCarByID = await this.getByID(id)
 
@@ -220,7 +231,7 @@ class CarsService{
                 imgURL = getCarByID.data['get_car']['imgURL']
             }
 
-            const updatedCar = await carsRepository.update({ id, name, type, dailyPrice, size, imgURL })
+            const updatedCar = await carsRepository.update({ id, name, type, dailyPrice, size, imgURL, username })
 
             const newUpdatedCar = await this.getByID(id)
 

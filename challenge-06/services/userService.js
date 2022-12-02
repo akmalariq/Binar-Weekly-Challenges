@@ -125,6 +125,45 @@ class UsersService {
         }
     }
 
+    
+    static async registerAsAdmin(email) {
+        try {
+            const getUser = await usersRepository.getByEmail(email)
+            console.log(getUser)
+            if (!getUser) {
+                return {
+                    status: false,
+                    status_code: 404,
+                    message: "Email does not exists",
+                    data: {
+                        registered_user: null
+                    }
+                }
+            }
+
+            const rows_updated = await usersRepository.enrollAsAdmin(email)
+            const updatedUser = await usersRepository.getByEmail(email)
+            
+            return {
+                status: true,
+                status_code: 201,
+                message: "User successfuly enrolled as Admin",
+                data: {
+                    rows: rows_updated,
+                    registered_user: updatedUser
+                }
+            }
+        } catch (err) {
+            return {
+                status: false,
+                status_code: 500,
+                message: err.message,
+                data: {
+                    registered_user: null
+                }
+            }
+        }
+    }
 }
 
 module.exports = UsersService

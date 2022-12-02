@@ -2,6 +2,7 @@ const carsService = require('../services/carsService')
 
 const create = async (req, res) => {
     const { name, type, dailyPrice, size, imgURL } = req.body;
+    const username = req.user.name
 
     // const user_id = req.user.id
 
@@ -10,7 +11,8 @@ const create = async (req, res) => {
         type,
         dailyPrice,
         size,
-        imgURL
+        imgURL,
+        username
     })
 
     res.status(status_code).send({
@@ -33,7 +35,6 @@ const getAll = async (req, res) => {
 
 const getByID = async (req, res) => {
     const id = req.params.id
-
     const { status, status_code, message, data } = await carsService.getByID(id)
 
     res.status(status_code).send({
@@ -45,8 +46,8 @@ const getByID = async (req, res) => {
 
 const deleteCar = async (req, res) => {
     const id = req.params.id
-
-    const { status, status_code, message, data } = await carsService.delete(id)
+    const username = req.user.name
+    const { status, status_code, message, data } = await carsService.delete({ id, username })
 
     res.status(status_code).send({
         status: status,
@@ -58,8 +59,9 @@ const deleteCar = async (req, res) => {
 const updateCar = async (req, res) => {
     const id = req.params.id
     const { name, type, dailyPrice, size, imgURL } = req.body
+    const username = req.user.name
 
-    const { status, status_code, message, data } = await carsService.update({ id, name, type, dailyPrice, size, imgURL })
+    const { status, status_code, message, data } = await carsService.update({ id, name, type, dailyPrice, size, imgURL, username })
 
     res.status(status_code).send({
         status: status,

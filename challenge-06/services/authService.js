@@ -34,17 +34,6 @@ class authService {
                 }
             }
 
-            if (!role) {
-                return {
-                    status: false,
-                    status_code: 400,
-                    message: 'Role is required, please input role.',
-                    data: {
-                        user: null
-                    }
-                }
-            }
-
             if (!password) {
                 return {
                     status: false,
@@ -94,7 +83,7 @@ class authService {
                 name,
                 email,
                 password: hashedPassword,
-                role,
+                role: 'member',
                 imgURL
             })
 
@@ -118,7 +107,7 @@ class authService {
             }
         }
     }
-
+    
     static async login({ email, password }) {
         try {
             // Payload Validation

@@ -12,6 +12,18 @@ class UsersRepository {
         
         return getUser
     }
+    
+    static async enrollAsAdmin(email) {
+        const updatedAsAdmin = await User.update(
+            {
+                role: "admin"
+            },
+            {
+                where: { email: email }
+            })
+        
+        return updatedAsAdmin
+    }
 
     static async create({ name, email, password, role, imgURL }) {
         const createdUser = User.create({
