@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const { OAuth2Client } = require('google-auth-library')
 
 const { JWT } = require('../lib/const')
+const { authenticate } = require('../middlewares/auth')
 
 const SALT_ROUND = 10
 
@@ -221,3 +222,5 @@ class AuthService {
     //     }
     // }
 }
+
+module.exports = AuthService
