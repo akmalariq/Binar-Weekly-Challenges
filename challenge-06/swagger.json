@@ -35,7 +35,7 @@
                         "in": "body",
                         "description": "User to register",
                         "schema": {
-                            "$ref": "#/definitions/Register"
+                            "$ref": "#/definitions/register"
                         }
                     }
                 ],
@@ -59,7 +59,7 @@
                         "in": "body",
                         "description": "User to login",
                         "schema": {
-                            "$ref": "#/definitions/Login"
+                            "$ref": "#/definitions/login"
                         }
                     }
                 ],
@@ -83,7 +83,7 @@
                         "in": "body",
                         "description": "Super Admin to register admin",
                         "schema": {
-                            "$ref": "#/definitions/RegisterAdmin"
+                            "$ref": "#/definitions/registerAdmin"
                         }
                     }
                 ],
@@ -238,6 +238,109 @@
                             "$ref": "#/definitions/Users"
                         }
                     }
+                }
+            }
+        }
+    },
+    "definitions":{
+        "register": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "imgURL": {
+                    "type": "string"
+                }
+            }
+        },
+        "login": {
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "registerAdmin": {
+            "properties": {
+                "email": {
+                    "type": "string"
+                }
+            }
+        },
+        "currentUser": {
+            "properties": {
+                "currentUser": {
+                    "type": "object"
+                }
+            }
+        },
+        "createCar": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "dailyPrice": {
+                    "type": "string"
+                },
+                "size": {
+                    "type": "string"
+                },
+                "imgURL": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "updateCarEntry": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "dailyPrice": {
+                    "type": "string"
+                },
+                "size": {
+                    "type": "string"
+                },
+                "imgURL": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "softDeleteCarEntry": {
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "getCarEntryByID": {
+            "properties": {
+                "id": {
+                    "type": "integer"
                 }
             }
         }
