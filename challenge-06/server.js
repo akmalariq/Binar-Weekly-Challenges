@@ -2,6 +2,7 @@ const express = require('express')
 // const swaggerOptions = require('../../binar-deployment-be/utils/swaggerOptions')
 // const bodyParser = require('body-parser')
 const swaggerUi = require('swagger-ui-express')
+const swaggerDocument = require('./swagger.json')
 const swaggerJsdoc = require('swagger-jsdoc')
 // const cors = require('cors')
 // const path = require('path')
@@ -40,16 +41,16 @@ app.post('/auth/me', middleware.authenticate, authController.currentUser)
 // Cars
 
 // Admin
-app.post("/api/v1/car", middleware.authenticate, middleware.isAdmin, carsController.create)
-app.put("/api/v1/car/:id", middleware.authenticate, middleware.isAdmin, carsController.updateCar)
-app.delete("/api/v1/car/:id", middleware.authenticate, middleware.isAdmin, carsController.deleteCar)
+app.post("/api/v1/car/create", middleware.authenticate, middleware.isAdmin, carsController.create)
+app.put("/api/v1/car/update/:id", middleware.authenticate, middleware.isAdmin, carsController.updateCar)
+app.delete("/api/v1/car/delete/:id", middleware.authenticate, middleware.isAdmin, carsController.deleteCar)
 
 // Member
-app.get("/api/v1/cars", carsController.getAll)
-app.get("/api/v1/car/:id", carsController.getByID)
+app.get("/api/v1/car/getall", carsController.getAll)
+app.get("/api/v1/car/getby/:id", carsController.getByID)
 
 // API Documentation
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 app.listen(port, () => {
   console.log(`Server running at http://127.0.0.1:${port}`)
