@@ -6,8 +6,10 @@ import {
   Route,
 } from "react-router-dom";
 import './index.css';
-import App from './App';
-import About from './About';
+import HomePage from './pages/App';
+import AboutPage from './pages/About';
+import TodosPage from './pages/Todos';
+import NotFoundPage from './pages/NotFound';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(
@@ -17,8 +19,10 @@ const root = ReactDOM.createRoot(
 root.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="/about" element={<About />} />
+      <Route path="/" element={<HomePage />} />
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="/todos" element={<TodosPage />} />
+      <Route path='*' element={<NotFoundPage />} />
     </Routes>
   </BrowserRouter>
 );
