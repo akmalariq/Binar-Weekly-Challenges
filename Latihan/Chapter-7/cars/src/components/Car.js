@@ -1,14 +1,14 @@
 import React from 'react'
 
 export default function Car({ car }) {
-  const { name, price, year, imageURL } = car;
+  const { name, dailyPrice, type, imgURL } = car;
 
   return (
     <div>
-      <img src={imageURL} alt=""></img>
+      <img src={imgURL} alt=""></img>
       <h1>Name: {name}</h1>
-      <h2>Price: {price}</h2>
-      <h2>Year: {year}</h2>
+      <h2>Price: {dailyPrice}</h2>
+      <h2>Type: {type}</h2>
     </div>
   )
 }

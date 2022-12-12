@@ -1,35 +1,48 @@
 import './App.css';
 
-import { useState } from 'react'
-import Car from './components/Car' 
+import { useState, useEffect } from 'react'
+import Car from '../components/Car' 
+import axios from 'axios';
 
-const cars = [
-  {
-    name: 'vw kodok',
-    price: 5e8,
-    imageURL: "https://asset.kompas.com/crops/BVvzl4dmOOrUiwXkurymtyTmJPw=/0x0:780x390/750x500/data/photo/2017/01/31/1837461Volkswagen780x390.jpg",
-    year: 2005
-  },
-  {
-    name: 'fortuner',
-    price: 5e8,
-    imageURL: 'https://www.toyota.astra.co.id/sites/default/files/2022-08/1%20fortuner%20gr%202022%20platinum%20white%20pearl%20-%20attitude%20black.png',
-    year: 2006
-  },
-  {
-    name: 'avanza',
-    price: 5e8,
-    imageURL: 'https://www.toyota.astra.co.id/sites/default/files/2021-11/2-avanza-gray-metallic.png',
-    year: 2007
-  }
-]
+// const cars = axios.get('http://localhost:3000/api/v1/car/getall')
+
+
+// const cars = [
+//   {
+//     name: 'vw kodok',
+//     price: 5e8,
+//     imageURL: "https://asset.kompas.com/crops/BVvzl4dmOOrUiwXkurymtyTmJPw=/0x0:780x390/750x500/data/photo/2017/01/31/1837461Volkswagen780x390.jpg",
+//     year: 2005
+//   },
+//   {
+//     name: 'fortuner',
+//     price: 5e8,
+//     imageURL: 'https://www.toyota.astra.co.id/sites/default/files/2022-08/1%20fortuner%20gr%202022%20platinum%20white%20pearl%20-%20attitude%20black.png',
+//     year: 2006
+//   },
+//   {
+//     name: 'avanza',
+//     price: 5e8,
+//     imageURL: 'https://www.toyota.astra.co.id/sites/default/files/2021-11/2-avanza-gray-metallic.png',
+//     year: 2007
+//   }
+// ]
 
 function App() {
-  const [carsState, setCarsState] = useState(cars)
+  const [carsState, setCarsState] = useState([])
   const [name, setName] = useState("")
   const [imageURL, setImageURL] = useState("")
   const [price, setPrice] = useState(0)
   const [year, setYear] = useState(0)
+  useEffect(() => {
+    const getListCars = async () => {
+      const response = await axios.get('http://localhost:2000/api/v1/car/getall')
+      console.log(response)
+      setCarsState(response.data.data.get_cars)
+    }
+    getListCars()
+  }, [])
+  
 
   const nameEventHandler = (event) => {
     setName(event.target.value)
