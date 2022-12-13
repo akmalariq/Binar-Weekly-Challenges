@@ -9,7 +9,7 @@ const { authenticate } = require('../middlewares/auth')
 const SALT_ROUND = 10
 
 class authService {
-    static async register({ name, email, password, role, imgURL }) {
+    static async register({ name, email, password, imgURL }) {
         try {
             // Payload Validation
             if (!name) {

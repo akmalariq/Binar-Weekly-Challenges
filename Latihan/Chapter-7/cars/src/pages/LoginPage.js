@@ -20,13 +20,13 @@ export default function LoginPage() {
   }
   const onSubmitButtonHandler = async (e) => {
     e.preventDefault();
-
     try {
       const payload = {
         email, password
       }
-
-      const registerResponse = await axios.post("http://localhost:8000/api/auth/login", payload);
+      
+      const registerResponse = await axios.post("http://localhost:2000/auth/login", payload);
+      console.log(registerResponse)
 
       if (registerResponse.status === 200) {
         console.log("berhasil daftar");
