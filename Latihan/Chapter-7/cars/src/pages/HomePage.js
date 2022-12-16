@@ -1,7 +1,7 @@
 import "./App.css";
 
 import { useState, useEffect } from "react";
-import Car from "../components/Car";
+import Car from "../components/Cars";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
