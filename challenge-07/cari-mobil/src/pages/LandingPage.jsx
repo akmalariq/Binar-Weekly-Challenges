@@ -11,6 +11,7 @@ import WhyUsSectionLandingPage from "../components/WhyUsSectionLandingPage";
 import TestimonialSectionLandingPage from "../components/TestimonialSectionLandingPage";
 import GettingStartedSectionLandingPage from "../components/GettingStartedSectionLandingPage";
 import FAQSectionLandingPage from "../components/FAQSectionLandingPage";
+import FooterSectionLandingPage from "../components/FooterSectionLandingPage";
 
 export default function LandingPage() {
   const [cars, setCars] = useState([]);
@@ -35,6 +36,7 @@ export default function LandingPage() {
       <TestimonialSectionLandingPage />
       <GettingStartedSectionLandingPage />
       <FAQSectionLandingPage />
+      <FooterSectionLandingPage />
       <header className="LandingPage-header">
         {/* START MAIN SECTION */}
         {/* <div
