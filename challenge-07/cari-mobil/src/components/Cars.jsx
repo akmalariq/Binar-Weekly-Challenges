@@ -16,32 +16,32 @@ export default function Car({ car }) {
   });
 
   let {
-    id,
-    plate,
     manufacture,
     model,
     image,
     rentPerDay,
     capacity,
     description,
-    availableAt,
     transmission,
-    type,
     year,
-    options,
-    specs,
   } = car;
 
   rentPerDay = currencyFormatter.format(rentPerDay);
 
   return (
-    <Col>
-      <Card style={{ width: "18rem" }}>
-        <Card.Img variant="top" src={image} alt={`car_${id}`} />
+    <Col className="d-flex justify-content-center">
+      <Card style={{ width: "20vw" }}>
+        <Card.Img
+          variant="top"
+          src={`https://raw.githubusercontent.com${image}`}
+          alt={image}
+        />
         <Card.Body>
           <Card.Text>{`${manufacture} ${model}`}</Card.Text>
           <Card.Title>{`Rp${rentPerDay.slice(4)} / Hari`}</Card.Title>
-          <Card.Text>{description}</Card.Text>
+          <Card.Text style={{ wordWrap: "break-word", whiteSpace: "normal" }}>
+            {description}
+          </Card.Text>
           <Row className="px-2">
             <Col xs={1} className="m-1 px-0">
               <img src={require("../assets/fi_users.png")} alt="fi_users" />
@@ -75,23 +75,6 @@ export default function Car({ car }) {
           <Button variant="success">Pilih Mobil</Button>
         </Card.Body>
       </Card>
-      <p>
-        id: {id} <br />
-        plate: {plate} <br />
-        manufacture: {manufacture} <br />
-        model: {model} <br />
-        image: {image} <br />
-        rentPerDay: {rentPerDay} <br />
-        capacity: {capacity} <br />
-        description: {description} <br />
-        transmission: {transmission} <br />
-        type: {type} <br />
-        year: {year} <br />
-        options: {options} <br />
-        specs: {specs} <br />
-        availableAt: {availableAt} <br />
-      </p>
-      <br />
     </Col>
   );
 }
