@@ -26,7 +26,6 @@ export default function Car({ car }) {
     description,
     availableAt,
     transmission,
-    available,
     type,
     year,
     options,
@@ -42,12 +41,7 @@ export default function Car({ car }) {
         <Card.Body>
           <Card.Text>{`${manufacture} ${model}`}</Card.Text>
           <Card.Title>{`Rp${rentPerDay.slice(4)} / Hari`}</Card.Title>
-          <Card.Text>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sapiente
-            accusamus, reprehenderit, aspernatur modi beatae laboriosam sunt
-            quas vel maiores aliquam dolor, hic tempora ratione dicta quidem ea.
-            Et, nemo corrupti!
-          </Card.Text>
+          <Card.Text>{description}</Card.Text>
           <Row className="px-2">
             <Col xs={1} className="m-1 px-0">
               <img src={require("../assets/fi_users.png")} alt="fi_users" />
@@ -85,17 +79,17 @@ export default function Car({ car }) {
         id: {id} <br />
         plate: {plate} <br />
         manufacture: {manufacture} <br />
+        model: {model} <br />
         image: {image} <br />
         rentPerDay: {rentPerDay} <br />
         capacity: {capacity} <br />
         description: {description} <br />
-        availableAt: {availableAt} <br />
         transmission: {transmission} <br />
-        available: {available} <br />
         type: {type} <br />
         year: {year} <br />
         options: {options} <br />
         specs: {specs} <br />
+        availableAt: {availableAt} <br />
       </p>
       <br />
     </Col>
