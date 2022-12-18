@@ -1,6 +1,8 @@
 // Dependencies
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
 
 // Components
 import Cars from "../components/Cars";
@@ -25,9 +27,13 @@ export default function SewaPage() {
     <div className="SewaPage">
       <NavigationBar />
       <MainSectionLandingPage />
-      {cars.map((car) => (
-        <Cars car={car} />
-      ))}
+      <Container>
+        <Row xs={3}>
+          {cars.map((car) => (
+            <Cars car={car} />
+          ))}
+        </Row>
+      </Container>
     </div>
   );
 }
