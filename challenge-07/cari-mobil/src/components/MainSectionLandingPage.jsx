@@ -22,7 +22,7 @@ export default function MainSectionLandingPage() {
             <a
               className="btn text-white rounded-1"
               style={{ backgroundColor: "#5CB85F" }}
-              href="/"
+              href="/sewa"
             >
               Mulai Sewa Mobil
             </a>
