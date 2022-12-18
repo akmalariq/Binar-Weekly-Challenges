@@ -1,19 +1,22 @@
 // Dependencies
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 export default function FAQSectionLandingPage() {
   return (
     <div className="FAQSectionLandingPage">
-      <div class="container my-5 py-lg-5" id="faq">
-        <div class="row row-cols-1 row-cols-lg-2">
-          <div class="col col-lg-5">
+      <Container className="my-5 py-lg-5" id="faq">
+        <Row xs={1} lg={2}>
+          <Col lg={5}>
             <h4 class="fw-bold" style={{ fontSize: "24px" }}>
               Frequently Asked Question
             </h4>
             <p style={{ fontSize: "14px" }}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit
             </p>
-          </div>
-          <div class="col col-lg-7">
+          </Col>
+          <Col lg={7}>
             <div class="accordion" id="accordionExample">
               <div class="accordion-item border border-2 rounded">
                 <h2 class="accordion-header" id="headingOne">
@@ -160,9 +163,9 @@ export default function FAQSectionLandingPage() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }
