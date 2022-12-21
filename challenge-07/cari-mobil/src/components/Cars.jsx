@@ -9,10 +9,6 @@ export default function Car({ car }) {
   const currencyFormatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "IDR",
-
-    // These options are needed to round to whole numbers if that's what you want.
-    //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-    //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
   });
 
   let {
@@ -33,8 +29,12 @@ export default function Car({ car }) {
       <Card style={{ width: "24vw" }}>
         <Card.Img
           variant="top"
-          src={require("../assets/kijang_innova.png")}
+          src={require(`../assets/images${image.slice(8)}`)}
           alt={image}
+          style={{
+            height: "24vh",
+            objectFit: "cover",
+          }}
         />
         <Card.Body>
           <Card.Text>{`${manufacture} ${model}`}</Card.Text>

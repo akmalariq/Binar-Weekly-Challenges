@@ -26,7 +26,7 @@ export default function SewaPage() {
         "https://raw.githubusercontent.com/fnurhidayat/probable-garbanzo/main/data/cars.min.json"
       );
       const result = response.data.filter((data) => {
-        if (capacity !== 0) {
+        if (parseInt(capacity) !== 0) {
           return data.capacity === parseInt(capacity);
         }
         return data.capacity;
@@ -80,7 +80,7 @@ export default function SewaPage() {
                   capacityEventHandler(e);
                 }}
               >
-                <option value={0}>Choose...</option>
+                <option value={0}>All</option>
                 <option value={2}>{2}</option>
                 <option value={4}>{4}</option>
                 <option value={6}>{6}</option>
