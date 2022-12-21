@@ -19,6 +19,8 @@ export default function Car({ car }) {
     capacity,
     description,
     transmission,
+    available,
+    availableAt,
     year,
   } = car;
 
@@ -37,7 +39,9 @@ export default function Car({ car }) {
           }}
         />
         <Card.Body>
-          <Card.Text>{`${manufacture} ${model}`}</Card.Text>
+          <Card.Text>{`${manufacture} ${model} available at: ${availableAt} ${
+            available ? "is available" : "not available"
+          }`}</Card.Text>
           <Card.Title>{`Rp${rentPerDay.slice(4)} / Hari`}</Card.Title>
           <Card.Text style={{ wordWrap: "break-word", whiteSpace: "normal" }}>
             {description}

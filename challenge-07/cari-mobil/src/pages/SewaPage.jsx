@@ -14,6 +14,12 @@ import MainSectionLandingPage from "../components/MainSectionLandingPage";
 export default function SewaPage() {
   const [cars, setCars] = useState([]);
   const [capacity, setCapacity] = useState(0);
+  const [availability, setAvailability] = useState(0);
+
+  function availabilityEventHandler(e) {
+    const val = e.target.value;
+    setAvailability(val);
+  }
 
   function capacityEventHandler(e) {
     const val = e.target.value;
@@ -25,18 +31,24 @@ export default function SewaPage() {
       const response = await axios.get(
         "https://raw.githubusercontent.com/fnurhidayat/probable-garbanzo/main/data/cars.min.json"
       );
-      const result = response.data.filter((data) => {
+      let result = response.data.filter((data) => {
+        if (availability === 0) {
+          setAvailability(new Date());
+        }
+        return Date.parse(data.availableAt) < Date.parse(availability);
+      });
+      result = result.filter((data) => {
         if (parseInt(capacity) !== 0) {
           return data.capacity === parseInt(capacity);
         }
-        return data.capacity;
+        return data;
       });
       console.log(result);
       console.log(response.data);
       setCars(result);
     };
     getListCars();
-  }, [capacity]);
+  }, [availability, capacity]);
 
   return (
     <div className="SewaPage">
@@ -55,7 +67,12 @@ export default function SewaPage() {
             </Col>
             <Col>
               <p>Tanggal</p>
-              <Form.Control type="date" placeholder="Last name" />
+              <Form.Control
+                type="date"
+                onChange={(e) => {
+                  availabilityEventHandler(e);
+                }}
+              />
             </Col>
             <Col>
               <p>Waktu Jemput/Ambil</p>
@@ -75,7 +92,7 @@ export default function SewaPage() {
             <Col>
               <p>{"Jumlah Penumpang (optional)"}</p>
               <Form.Select
-                defaultValue="Choose..."
+                defaultValue={0}
                 onChange={(e) => {
                   capacityEventHandler(e);
                 }}
