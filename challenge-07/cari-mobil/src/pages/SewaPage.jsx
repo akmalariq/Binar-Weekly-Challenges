@@ -15,25 +15,28 @@ export default function SewaPage() {
   const [cars, setCars] = useState([]);
   const [capacity, setCapacity] = useState(0);
 
+  function capacityEventHandler(e) {
+    const val = e.target.value;
+    setCapacity(val);
+  }
+
   useEffect(() => {
     const getListCars = async () => {
       const response = await axios.get(
         "https://raw.githubusercontent.com/fnurhidayat/probable-garbanzo/main/data/cars.min.json"
       );
       const result = response.data.filter((data) => {
-        return data.capacity >= capacity;
+        if (capacity !== 0) {
+          return data.capacity === parseInt(capacity);
+        }
+        return data.capacity;
       });
       console.log(result);
       console.log(response.data);
-      setCars(response.data);
+      setCars(result);
     };
     getListCars();
   }, [capacity]);
-
-  function capacityEventHandler(e) {
-    const val = e.target.value;
-    setCapacity(val);
-  }
 
   return (
     <div className="SewaPage">
@@ -77,10 +80,10 @@ export default function SewaPage() {
                   capacityEventHandler(e);
                 }}
               >
-                <option>Choose...</option>
-                <option>{2}</option>
-                <option>{4}</option>
-                <option>{6}</option>
+                <option value={0}>Choose...</option>
+                <option value={2}>{2}</option>
+                <option value={4}>{4}</option>
+                <option value={6}>{6}</option>
               </Form.Select>
             </Col>
           </Row>
