@@ -13,18 +13,27 @@ import MainSectionLandingPage from "../components/MainSectionLandingPage";
 
 export default function SewaPage() {
   const [cars, setCars] = useState([]);
-  // const [driver, setCars] = useState([]);
+  const [capacity, setCapacity] = useState(0);
 
   useEffect(() => {
     const getListCars = async () => {
       const response = await axios.get(
         "https://raw.githubusercontent.com/fnurhidayat/probable-garbanzo/main/data/cars.min.json"
       );
-      console.log(Object.keys(response.data));
+      const result = response.data.filter((data) => {
+        return data.capacity >= capacity;
+      });
+      console.log(result);
+      console.log(response.data);
       setCars(response.data);
     };
     getListCars();
-  }, []);
+  }, [capacity]);
+
+  function capacityEventHandler(e) {
+    const val = e.target.value;
+    setCapacity(val);
+  }
 
   return (
     <div className="SewaPage">
@@ -62,7 +71,17 @@ export default function SewaPage() {
             </Col>
             <Col>
               <p>{"Jumlah Penumpang (optional)"}</p>
-              <Form.Control placeholder="Last name" />
+              <Form.Select
+                defaultValue="Choose..."
+                onChange={(e) => {
+                  capacityEventHandler(e);
+                }}
+              >
+                <option>Choose...</option>
+                <option>{2}</option>
+                <option>{4}</option>
+                <option>{6}</option>
+              </Form.Select>
             </Col>
           </Row>
         </Form>

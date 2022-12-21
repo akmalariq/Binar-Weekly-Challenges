@@ -30,10 +30,10 @@ export default function Car({ car }) {
 
   return (
     <Col className="d-flex justify-content-center">
-      <Card style={{ width: "20vw" }}>
+      <Card style={{ width: "24vw" }}>
         <Card.Img
           variant="top"
-          src={`https://raw.githubusercontent.com${image}`}
+          src={require("../assets/kijang_innova.png")}
           alt={image}
         />
         <Card.Body>
