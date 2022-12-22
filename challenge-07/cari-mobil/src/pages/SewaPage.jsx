@@ -14,11 +14,28 @@ import MainSectionLandingPage from "../components/MainSectionLandingPage";
 export default function SewaPage() {
   const [cars, setCars] = useState([]);
   const [capacity, setCapacity] = useState(0);
-  const [availability, setAvailability] = useState(0);
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
 
-  function availabilityEventHandler(e) {
+  // function padTo2Digits(num) {
+  //   return num.toString().padStart(2, "0");
+  // }
+
+  // function formatDate(date) {
+  //   const newDate = `${padTo2Digits(date.getDate())}-${padTo2Digits(
+  //     date.getMonth() + 1
+  //   )}-${date.getFullYear()}`;
+  //   return newDate;
+  // }
+
+  function dateEventHandler(e) {
     const val = e.target.value;
-    setAvailability(val);
+    setDate(val);
+  }
+
+  function timeEventHandler(e) {
+    const val = e.target.value;
+    setTime(val);
   }
 
   function capacityEventHandler(e) {
@@ -32,10 +49,55 @@ export default function SewaPage() {
         "https://raw.githubusercontent.com/fnurhidayat/probable-garbanzo/main/data/cars.min.json"
       );
       let result = response.data.filter((data) => {
-        if (availability === 0) {
-          setAvailability(new Date());
+        if (date === "") {
+          if (time !== "") {
+            const currentDate = new Date();
+            return (
+              Date.parse(new Date(data.availableAt)) <=
+              Date.parse(
+                new Date(
+                  currentDate.getFullyear(),
+                  currentDate.getMonth(),
+                  currentDate.getDate(),
+                  time.slice(0, 2),
+                  time.slice(3)
+                )
+              )
+            );
+          } else {
+            return (
+              Date.parse(new Date(data.availableAt)) <= Date.parse(new Date())
+            );
+          }
+        } else {
+          if (time === "") {
+            return (
+              Date.parse(new Date(data.availableAt)) <=
+              Date.parse(
+                new Date(
+                  date.slice(0, 4),
+                  date.slice(5, 7),
+                  date.slice(8),
+                  0,
+                  0
+                )
+              )
+            );
+          } else {
+            return (
+              Date.parse(new Date(data.availableAt)) <=
+              Date.parse(
+                new Date(
+                  date.slice(0, 4),
+                  date.slice(5, 7),
+                  date.slice(8),
+                  time.slice(0, 2),
+                  time.slice(3)
+                )
+              )
+            );
+          }
         }
-        return Date.parse(data.availableAt) < Date.parse(availability);
       });
       result = result.filter((data) => {
         if (parseInt(capacity) !== 0) {
@@ -48,7 +110,7 @@ export default function SewaPage() {
       setCars(result);
     };
     getListCars();
-  }, [availability, capacity]);
+  }, [date, time, capacity]);
 
   return (
     <div className="SewaPage">
@@ -60,9 +122,9 @@ export default function SewaPage() {
             <Col>
               <p>Tipe Driver</p>
               <Form.Select defaultValue="Choose...">
-                <option>Choose...</option>
-                <option>Dengan Sopir</option>
-                <option>{`Tanpa Sopir (Lepas Kunci)`}</option>
+                <option value={0}>Choose...</option>
+                <option value={1}>Dengan Sopir</option>
+                <option value={2}>{`Tanpa Sopir (Lepas Kunci)`}</option>
               </Form.Select>
             </Col>
             <Col>
@@ -70,23 +132,27 @@ export default function SewaPage() {
               <Form.Control
                 type="date"
                 onChange={(e) => {
-                  availabilityEventHandler(e);
+                  dateEventHandler(e);
                 }}
               />
             </Col>
             <Col>
               <p>Waktu Jemput/Ambil</p>
-              <Form.Select defaultValue="Choose...">
+              <Form.Select
+                onChange={(e) => {
+                  timeEventHandler(e);
+                }}
+              >
                 <option>Choose...</option>
-                <option>{"08.00 WIB"}</option>
-                <option>{"09.00 WIB"}</option>
-                <option>{"10.00 WIB"}</option>
-                <option>{"11.00 WIB"}</option>
-                <option>{"12.00 WIB"}</option>
-                <option>{"13.00 WIB"}</option>
-                <option>{"14.00 WIB"}</option>
-                <option>{"15.00 WIB"}</option>
-                <option>{"16.00 WIB"}</option>
+                <option value={"08.00"}>{"08.00 WIB"}</option>
+                <option value={"09.00"}>{"09.00 WIB"}</option>
+                <option value={"10.00"}>{"10.00 WIB"}</option>
+                <option value={"11.00"}>{"11.00 WIB"}</option>
+                <option value={"12.00"}>{"12.00 WIB"}</option>
+                <option value={"13.00"}>{"13.00 WIB"}</option>
+                <option value={"14.00"}>{"14.00 WIB"}</option>
+                <option value={"15.00"}>{"15.00 WIB"}</option>
+                <option value={"16.00"}>{"16.00 WIB"}</option>
               </Form.Select>
             </Col>
             <Col>

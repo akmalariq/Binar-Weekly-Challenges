@@ -39,9 +39,7 @@ export default function Car({ car }) {
           }}
         />
         <Card.Body>
-          <Card.Text>{`${manufacture} ${model} available at: ${availableAt} ${
-            available ? "is available" : "not available"
-          }`}</Card.Text>
+          <Card.Text>{`${manufacture} ${model}`}</Card.Text>
           <Card.Title>{`Rp${rentPerDay.slice(4)} / Hari`}</Card.Title>
           <Card.Text style={{ wordWrap: "break-word", whiteSpace: "normal" }}>
             {description}
@@ -76,6 +74,20 @@ export default function Car({ car }) {
               <Card.Text>{year}</Card.Text>
             </Col>
           </Row>
+          <Col className="m-1 px-0">
+            <Card.Text>
+              {`
+                available at: ${new Date(availableAt).getDate()}-
+                              ${new Date(availableAt).getMonth() + 1}-
+                              ${new Date(availableAt).getFullYear()} 
+                              ${new Date(availableAt).getHours()}:
+                              ${new Date(availableAt).getMinutes()}
+              `}
+            </Card.Text>
+            <Card.Text>{`${
+              available ? "is available" : "not available"
+            }`}</Card.Text>
+          </Col>
           <Button variant="success">Pilih Mobil</Button>
         </Card.Body>
       </Card>
