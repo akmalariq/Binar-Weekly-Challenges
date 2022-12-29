@@ -17,17 +17,6 @@ export default function SewaPage() {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
 
-  // function padTo2Digits(num) {
-  //   return num.toString().padStart(2, "0");
-  // }
-
-  // function formatDate(date) {
-  //   const newDate = `${padTo2Digits(date.getDate())}-${padTo2Digits(
-  //     date.getMonth() + 1
-  //   )}-${date.getFullYear()}`;
-  //   return newDate;
-  // }
-
   function dateEventHandler(e) {
     const val = e.target.value;
     setDate(val);
@@ -116,7 +105,7 @@ export default function SewaPage() {
     <div className="SewaPage">
       <NavigationBar />
       <MainSectionLandingPage />
-      <Container className="p-2">
+      <Container>
         <Form>
           <Row>
             <Col>
