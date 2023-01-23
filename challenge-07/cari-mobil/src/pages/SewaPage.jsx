@@ -46,7 +46,7 @@ export default function SewaPage() {
               Date.parse(
                 new Date(
                   currentDate.getFullyear(),
-                  currentDate.getMonth(),
+                  currentDate.getMonth() + 1,
                   currentDate.getDate(),
                   time.slice(0, 2),
                   time.slice(3)
